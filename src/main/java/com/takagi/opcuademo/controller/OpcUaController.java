@@ -18,6 +18,7 @@ public class OpcUaController {
         this.opcUaClientService = opcUaClientService;
     }
 
+    // 起動時に自動接続するため現在はテスト用
     @GetMapping("/opcua/connect")
     public String connect() {
         try {
