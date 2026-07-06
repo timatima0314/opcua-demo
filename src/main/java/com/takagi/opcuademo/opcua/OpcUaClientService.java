@@ -16,6 +16,9 @@ import org.eclipse.milo.opcua.stack.core.types.structured.ReferenceDescription;
 import org.eclipse.milo.opcua.stack.core.types.builtin.DataValue;
 import org.eclipse.milo.opcua.stack.core.types.enumerated.TimestampsToReturn;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 @Service
 public class OpcUaClientService {
     private final ProductionHistoryRepository repository;
@@ -25,6 +28,20 @@ public class OpcUaClientService {
     }
 
     private OpcUaClient client;
+
+    @PostConstruct
+    public void init() throws Exception {
+
+        connect();
+
+    }
+
+    @PreDestroy
+    public void close() throws Exception {
+
+        disconnect();
+
+    }
 
     public void connect() throws Exception {
 
