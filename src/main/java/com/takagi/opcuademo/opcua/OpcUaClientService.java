@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import org.eclipse.milo.opcua.sdk.client.OpcUaClient;
 import org.springframework.stereotype.Service;
 
-import com.takagi.opcuademo.config.TagConfig;
 import com.takagi.opcuademo.dto.PlcData;
 import com.takagi.opcuademo.entity.ProductionHistory;
+import com.takagi.opcuademo.entity.TagConfig;
 import com.takagi.opcuademo.repository.ProductionHistoryRepository;
 
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
@@ -76,8 +76,7 @@ public class OpcUaClientService {
 
     public PlcData read(TagConfig tagConfig) throws Exception {
 
-        NodeId nodeId = tagConfig.getNodeId();
-
+        NodeId nodeId = tagConfig.toNodeId();
         DataValue dataValue = client.readValue(
                 0.0,
                 TimestampsToReturn.Both,

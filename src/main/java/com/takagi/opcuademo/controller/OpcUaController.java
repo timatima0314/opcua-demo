@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.eclipse.milo.opcua.stack.core.NodeIds;
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 
-import com.takagi.opcuademo.config.TagConfig;
 import com.takagi.opcuademo.dto.PlcData;
+import com.takagi.opcuademo.entity.TagConfig;
 import com.takagi.opcuademo.opcua.OpcUaClientService;
 
 @RestController
@@ -43,11 +43,12 @@ public class OpcUaController {
 
     @GetMapping("/opcua/read")
     public PlcData read() {
-        TagConfig tagConfig = new TagConfig(
-                "PLC1",
-                "Int32",
-                new NodeId(2, "HelloWorld/ScalarTypes/Int32"),
-                true);
+        TagConfig tagConfig = new TagConfig();
+        tagConfig.setMachineId("PLC1");
+        tagConfig.setTagName("Int32");
+        tagConfig.setNamespaceIndex(2);
+        tagConfig.setIdentifier("HelloWorld/ScalarTypes/Int32");
+        tagConfig.setEnabled(true);
         try {
             PlcData plcData = opcUaClientService.read(tagConfig);
 
