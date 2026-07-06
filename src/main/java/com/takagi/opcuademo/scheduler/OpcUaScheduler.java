@@ -1,32 +1,38 @@
 package com.takagi.opcuademo.scheduler;
 
-import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
+import java.util.List;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.takagi.opcuademo.config.TagConfig;
+import com.takagi.opcuademo.entity.TagConfig;
 import com.takagi.opcuademo.opcua.OpcUaClientService;
+import com.takagi.opcuademo.repository.TagConfigRepository;
 
 @Component
 public class OpcUaScheduler {
 
     private final OpcUaClientService opcUaClientService;
+    private final TagConfigRepository tagConfigRepository;
 
-    public OpcUaScheduler(OpcUaClientService opcUaClientService) {
+    public OpcUaScheduler(
+            OpcUaClientService opcUaClientService,
+            TagConfigRepository tagConfigRepository) {
+
         this.opcUaClientService = opcUaClientService;
+        this.tagConfigRepository = tagConfigRepository;
     }
 
     @Scheduled(fixedRate = 5000)
     public void collect() throws Exception {
 
-        TagConfig tag = new TagConfig(
-                "PLC1",
-                "Int32",
-                new NodeId(2, "HelloWorld/ScalarTypes/Int32"),
-                true
-        );
+        List<TagConfig> tags = tagConfigRepository.findByEnabledTrue();
 
-        opcUaClientService.read(tag);
+        for (TagConfig tag : tags) {
+
+            opcUaClientService.read(tag);
+
+        }
 
         System.out.println("収集完了");
     }
