@@ -9,9 +9,6 @@ public class TagConfig {
     private NodeId nodeId;
     private boolean enabled;
 
-    public TagConfig() {
-    }
-
     public TagConfig(
             String machineId,
             String tagName,

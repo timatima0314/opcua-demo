@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.takagi.opcuademo.config.TagConfig;
 import com.takagi.opcuademo.dto.PlcData;
+import com.takagi.opcuademo.entity.ProductionHistory;
+import com.takagi.opcuademo.repository.ProductionHistoryRepository;
 
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 import org.eclipse.milo.opcua.sdk.client.nodes.UaNode;
@@ -16,6 +18,11 @@ import org.eclipse.milo.opcua.stack.core.types.enumerated.TimestampsToReturn;
 
 @Service
 public class OpcUaClientService {
+    private final ProductionHistoryRepository repository;
+
+    public OpcUaClientService(ProductionHistoryRepository repository) {
+        this.repository = repository;
+    }
 
     private OpcUaClient client;
 
@@ -69,6 +76,14 @@ public class OpcUaClientService {
         plcData.setDataType(value.getClass().getSimpleName());
         plcData.setReadTime(LocalDateTime.now());
 
+        ProductionHistory history = new ProductionHistory();
+
+        history.setMachineId(plcData.getMachineId());
+        history.setTagName(plcData.getTagName());
+        history.setValue(plcData.getValue().toString());
+        history.setReadTime(plcData.getReadTime());
+
+        repository.save(history);
         return plcData;
     }
 }
