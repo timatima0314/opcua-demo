@@ -1,9 +1,13 @@
 package com.takagi.opcuademo.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import org.eclipse.milo.opcua.stack.core.types.builtin.NodeId;
 
 @Entity
@@ -13,7 +17,9 @@ public class TagConfig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String machineId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "machine_id", nullable = false)
+    private Machine machine;
 
     private String tagName;
 
@@ -26,8 +32,12 @@ public class TagConfig {
     public TagConfig() {
     }
 
-    public String getMachineId() {
-        return machineId;
+    public Machine getMachine() {
+        return machine;
+    }
+
+    public void setMachine(Machine machine) {
+        this.machine = machine;
     }
 
     public String getTagName() {
@@ -44,10 +54,6 @@ public class TagConfig {
 
     public boolean isEnabled() {
         return enabled;
-    }
-
-    public void setMachineId(String machineId) {
-        this.machineId = machineId;
     }
 
     public void setTagName(String tagName) {

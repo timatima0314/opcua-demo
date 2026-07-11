@@ -35,10 +35,15 @@ public class OpcUaScheduler {
 
         for (TagConfig tag : tags) {
 
-            PlcData plcData = opcUaClientService.read(tag);
+            // PlcData plcData = opcUaClientService.read(tag);
 
-            productionHistoryService.save(plcData);
+            // productionHistoryService.save(plcData);
+            System.out.println("----------------");
+            System.out.println(tag.getTagName());
+            System.out.println(tag.getMachine().getMachineCode());
+            System.out.println(tag.getMachine().getMachineName());
 
+            opcUaClientService.read(tag);
         }
 
         System.out.println("収集完了");
