@@ -28,17 +28,10 @@ public class OpcUaClientService {
         this.clientManager = clientManager;
     }
 
+    public PlcData read(OpcUaClient client, TagConfig tagConfig) throws Exception {
 
-    public PlcData read(TagConfig tagConfig) throws Exception {
-
-        Machine machine = tagConfig.getMachine();
-        OpcUaClient client = clientManager.getClient(machine);
-        System.out.println("**********************");
-        System.out.println(machine.getMachineCode());
-        System.out.println(machine.getMachineName());
-        System.out.println(machine.getEndpoint());
-        System.out.println("**********************");
-
+        // Machine machine = tagConfig.getMachine();
+        // OpcUaClient client = clientManager.getClient(machine);
         NodeId nodeId = tagConfig.toNodeId();
         DataValue dataValue = client.readValue(
                 0.0,

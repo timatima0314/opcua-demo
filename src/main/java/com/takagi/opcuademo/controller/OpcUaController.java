@@ -40,20 +40,20 @@ public class OpcUaController {
     //     }
     // }
 
-    @GetMapping("/opcua/read")
-    public PlcData read() {
-        TagConfig tagConfig = new TagConfig();
-        // tagConfig.setMachineId("PLC1");
-        tagConfig.setTagName("Int32");
-        tagConfig.setNamespaceIndex(2);
-        tagConfig.setIdentifier("HelloWorld/ScalarTypes/Int32");
-        tagConfig.setEnabled(true);
-        try {
-            PlcData plcData = opcUaClientService.read(tagConfig);
+    // @GetMapping("/opcua/read")
+    // public PlcData read() {
+    //     TagConfig tagConfig = new TagConfig();
+    //     // tagConfig.setMachineId("PLC1");
+    //     tagConfig.setTagName("Int32");
+    //     tagConfig.setNamespaceIndex(2);
+    //     tagConfig.setIdentifier("HelloWorld/ScalarTypes/Int32");
+    //     tagConfig.setEnabled(true);
+    //     try {
+    //         PlcData plcData = opcUaClientService.read(tagConfig);
 
-            return plcData;
-        } catch (Exception e) {
-            return null;
-        }
-    }
+    //         return plcData;
+    //     } catch (Exception e) {
+    //         return null;
+    //     }
+    // }
 }

@@ -28,7 +28,6 @@ public class OpcUaClientManager {
 
         clients.put(endpoint, client);
 
-        System.out.println(machine.getMachineCode() + " 接続完了");
 
         return client;
     }
