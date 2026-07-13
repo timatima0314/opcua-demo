@@ -1,5 +1,9 @@
 package com.takagi.opcuademo.entity;
 
+import com.takagi.opcuademo.enums.MachineStatus;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +34,9 @@ public class Machine {
 
     @Column(nullable = false)
     private boolean enabled;
+
+    @Enumerated(EnumType.STRING)
+    private MachineStatus status;
 
     @OneToMany(mappedBy = "machine")
     private List<TagConfig> tags = new ArrayList<>();
@@ -79,5 +86,13 @@ public class Machine {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public MachineStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MachineStatus status) {
+        this.status = status;
     }
 }
